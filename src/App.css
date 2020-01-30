@@ -1,3 +1,12 @@
+::after{
+  margin: 0;
+}
+::before{
+  margin: 0;
+}
+*{
+  margin: 0;
+}
 .App {
   text-align: center;
 }
@@ -19,4 +28,110 @@
 
 .App-link {
   color: #09d3ac;
+}
+.footer{
+  position:  absolute;
+  bottom: 0px;
+  width: 100%;
+  height: 40px;
+  margin-top: 80px;
+  padding-top: 80px£;
+  background-color: #222222;
+}
+.vertical{
+  display: flex;
+  flex-direction: column;
+}
+.row{
+  justify-content: space-around
+}
+.logo{
+  width: 69px;
+  height: 50px;
+  background-image: url("Components/pictures/logo.jpg");
+  background-position: center;
+  background-size: 100%
+}
+.card-size{
+  width: 30vw;
+  margin: 32px 1vw 32px 1vw;
+  display: flex;
+}
+.center{
+  justify-content: center;
+  width: 60%;
+}
+.container > table {
+
+  display: flex;
+  justify-content: center;
+}
+.padding-text{
+  margin-bottom: 40px;
+}
+.btn-space{
+  margin-left: 5px
+}
+.btn-align{
+  display: flex;
+  align-items: baseline;
+}
+.bottom-card{
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  position: absolute;
+  bottom: 10px;
+  width: 90%;
+}
+.date{
+  font-weight: 700;
+}
+.card-text-padding{
+  padding: 15px 0 25px 0;
+  margin: 0 10px;
+   
+}
+.title{
+  padding-bottom: 30px;
+  font-size: 4.5rem;
+}
+.container > table {
+  width: 100%;
+}
+.test{
+  margin-bottom: 80px;
+}
+
+
+@media (max-width: 1250px) {
+  .bottom-card{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    bottom: 10px;
+    width: 90%;
+  }
+  .btn-align{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content:center;
+  }
+  .btn-align > button {
+    width: 100%;
+    padding: 10px 25px 10px 25px;
+  }
+  .btn-space{
+    margin-left: 0px;
+  }
+  .card-size{
+    width: 45vw;
+    margin: 10px 3px 10px 3px;
+  }
+  .padding-text{
+    margin-bottom: 99px;
+  }
+  
 }
