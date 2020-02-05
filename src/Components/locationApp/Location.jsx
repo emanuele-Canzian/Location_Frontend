@@ -15,7 +15,7 @@ import ListComponent from './ListComponent.jsx'
 class Location extends Component {
     render() {
         return (
-            <div className="TodoApp">        
+            <div className="Locations">        
                 <Router>
                     <>
                     <HeaderComponent/>
@@ -25,8 +25,8 @@ class Location extends Component {
                     <Route path="/register" component={RegisterComponent}/>
                     <Route path="/registerUser" component={RegProfileComponent}/>
                     <AuthenticatedRoute path="/welcome/:name" component={WelcomeComponent}/>
-                    <AuthenticatedRoute path="/todos/:id" component={ListComponent}/> 
-                    <AuthenticatedRoute path="/todos" component={ListLocationComponent}/>
+                    <AuthenticatedRoute path="/locations/:id" component={ListComponent}/> 
+                    <AuthenticatedRoute path="/locations" component={ListLocationComponent}/>
                     <AuthenticatedRoute path="/logout" component={LogoutComponent}/>               
                     <Route component={ErrorComponent}/>                
                     </Switch>

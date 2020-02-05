@@ -1,20 +1,24 @@
 import axios from 'axios'
+import{API_URL , API_URL_JPA} from '../../Components/locationApp/Constants'
 
 class LocationDataService{
-    retrieveAllTodos(name){
-        return axios.get(`http://localhost:8080/users/${name}/todos`);
+    retrieveAllLocation(name){
+        return axios.get(`${API_URL_JPA}/users/${name}/locations`);
     }
-    deleteTodo(name,id){
-        return axios.delete(`http://localhost:8080/users/${name}/locations/${id}`);
+    deleteLocation(name,id){
+        return axios.delete(`${API_URL_JPA}/users/${name}/locations/${id}`);
     }
-    updateTodo(name,id,todos){
-        return axios.put(`http://localhost:8080/users/${name}/locations/${id}`, todos);
+    updateLocation(name,id,todos){
+        return axios.put(`${API_URL_JPA}/users/${name}/locations/${id}`, todos);
     }
-    createTodo(name, todo) {
-        return axios.post(`http://localhost:8080/users/${name}/locations/`, todo);
+    createLocation(name, todo) {
+        return axios.post(`${API_URL_JPA}/users/${name}/locations/`, todo);
     } 
-    retrieveTodo(name, id){
-        return axios.get(`http://localhost:8080/users/${name}/locations/${id}`);
+    retrieveLocation(name, id){
+        return axios.get(`${API_URL_JPA}/users/${name}/locations/${id}`);
+    }
+    upload(data) {
+            return axios.post(`${API_URL_JPA}/upload`, data);
     }
 }
 export default new LocationDataService()

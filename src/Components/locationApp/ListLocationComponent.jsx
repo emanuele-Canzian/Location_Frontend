@@ -2,23 +2,21 @@ import React, {Component} from 'react'
 import LocationDataService from '../../api/location/LocationDataService.js'
 import AuthenticationService from './AuthenticationService'
 import moment from 'moment'
-
 class ListLocationComponent extends Component{
     constructor(props){
         super(props)
         this.state = {
-            locations : []
+            locations : [],
+            message: ""
+            
         }
         this.images ={ 
-            
-               test: require('./test1.jpg')
-               
-                            
+               test: require('./test1.jpg')                    
         }
-        this.deleteTodoClicked = this.deleteTodoClicked.bind(this)
-        this.updateTodoClicked = this.updateTodoClicked.bind(this)
-        this.refreshTodos = this.refreshTodos.bind(this)
-        this.addTodoClicked = this.addTodoClicked.bind(this)  
+        this.deleteLocationClicked = this.deleteLocationClicked.bind(this)
+        this.updateLocationClicked = this.updateLocationClicked.bind(this)
+        this.refreshLocation = this.refreshLocation.bind(this)
+        this.addLocationClicked = this.addLocationClicked.bind(this)
     }
 
     
@@ -26,33 +24,34 @@ class ListLocationComponent extends Component{
         return <div> 
                 <div className="test">
                 <h1 className="title">Locations</h1>
+                {this.state.message && <div className="alert alert-success">{this.state.message}</div>}
                 <div className="row">
-                    <button className="btn btn-success" onClick={this.addTodoClicked}>Add</button>
+                    <button className="btn btn-success" onClick={this.addLocationClicked}>Add</button>
                 </div>
                     <table>
-                        <tbody className="row">{
+                        <div className="row">{
                             this.state.locations.map ( location =>
-                            <tr className="card card-size"  key={location.id}>
-                                <td className="card-img-top"><img className="card-img-top" src={this.images.test} /></td>
+                            <div className="card card-size"  key={location.id}>
+                                <div className="card-img-top"><img className="card-img-top" src=""></img></div>
+                                <div className="card-img-top"><img src={"E:\\Location_app\\Location-API\\src\\main\\java\\com\\example\\LocationAPI\\LocationAPI\\LocationPictures\\" + location.imageName} alt=""/> </div>
                                 <div className="card-body vertical">
-                                <td><h2 className="card-title mb-2">{location.title}</h2></td>
+                                <div><h2 className="card-title mb-2">{location.title}</h2></div>
                                 <hr/>
-                                <td className="padding-text"><p className="card-text card-text-padding">{location.description}</p></td>
-                                
+                                <div className="padding-text"><p className="card-text card-text-padding">{location.description}</p></div>                   
                                 <div className="bottom-card">
                                     <div>
-                                        <td className="card-text mb-2 date">{moment(location.targetDate).format('YYYY-MM-DD')}</td>
+                                        <div className="card-text mb-2 date">{moment(location.targetDate).format('YYYY-MM-DD')}</div>
                                     </div>
                                     <div className="btn-align">
-                                        <button className="btn btn-danger mb-1 " onClick={() => this.deleteTodoClicked(location.id)}>Löschen</button>
-                                        <button className="btn btn-secondary btn-space"onClick={() => this.updateTodoClicked(location.id)}>Bearbeiten</button>
+                                        <button className="btn btn-danger mb-1 " onClick={() => this.deleteLocationClicked(location.id)}>Löschen</button>
+                                        <button className="btn btn-secondary btn-space"onClick={() => this.updateLocationClicked(location.id)}>Bearbeiten</button>
                                     </div>
                                 </div>
                                 </div>
-                            </tr>
+                            </div>
                             )
                         }
-                        </tbody>
+                        </div>
                     </table>
                 </div>
              </div>            
@@ -62,7 +61,7 @@ class ListLocationComponent extends Component{
     }
     componentDidMount(){
         console.log('componentDidMount')
-        this.refreshTodos();
+        this.refreshLocation();
         console.log(this.state)
     }
     shouldComponentUpdate(nextProps, nextState){
@@ -71,17 +70,17 @@ class ListLocationComponent extends Component{
         console.log(nextState)
         return true
     }
-    addTodoClicked(id){
+    addLocationClicked(id){
         console.log('update '+ id)
-        this.props.history.push(`/todos/-1`)
+        this.props.history.push(`/locations/-1`)
     }
-    deleteTodoClicked(id){
+    deleteLocationClicked(id){
         let username = AuthenticationService.getLoggedInUserName()
-        LocationDataService.deleteTodo(username, id)
+        LocationDataService.deleteLocation(username, id)
             .then (
                 response => {
                     this.setState({message : `Delete of Todo ${id} Successful`});
-                    this.refreshTodos();
+                    this.refreshLocation();
                 }
             )
             .catch(
@@ -90,18 +89,18 @@ class ListLocationComponent extends Component{
                 }
             )
     }
-    updateTodoClicked(id){
+    updateLocationClicked(id){
         console.log("Update" + id)
-        this.props.history.push(`/todos/${id}`)
+        this.props.history.push(`/locations/${id}`)
     }
     
-    refreshTodos(){
+    refreshLocation(){
         let username = AuthenticationService.getLoggedInUserName()
         console.log("username: "+ username)
-        LocationDataService.retrieveAllTodos(username)
+        LocationDataService.retrieveAllLocation(username)
         .then(
             response => {
-                console.log('yeah')
+                console.log({locations: response.data})
                 this.setState({locations: response.data})
             }
         ).catch(response => {

@@ -3,7 +3,7 @@ import moment from 'moment'
 import {Formik, Form ,Field,ErrorMessage} from 'formik'
 import AuthenticationService from './AuthenticationService.js'
 import LocationDataService from '../../api/location/LocationDataService.js'
-import axios from 'axios'
+
 
 class ListComponent extends Component{
     constructor(props) {
@@ -14,7 +14,7 @@ class ListComponent extends Component{
           title: "",
           description: "",
           targetDate: moment(new Date()).format("YYYY-MM-DD"),
-          selectedFile: ""
+          imageName: null
         };
         this.onSubmit = this.onSubmit.bind(this);
         this.validate = this.validate.bind(this);
@@ -27,11 +27,12 @@ class ListComponent extends Component{
     
         let username = AuthenticationService.getLoggedInUserName();
     
-        LocationDataService.retrieveTodo(username, this.state.id).then(response =>
+        LocationDataService.retrieveLocation(username, this.state.id).then(response =>
           this.setState({
             title: response.data.title,
             description: response.data.description,
-            targetDate: moment(response.data.targetDate).format("YYYY-MM-DD")
+            targetDate: moment(response.data.targetDate).format("YYYY-MM-DD"),
+            imageName : response.data.imageName
           })
         );
       }
@@ -58,16 +59,17 @@ class ListComponent extends Component{
           id: this.state.id,
           title : values.title,
           description: values.description,
-          targetDate: values.targetDate
+          targetDate: values.targetDate,
+          imageName: values.imageName
         };
     
         if (this.state.id === -1) {
-          LocationDataService.createTodo(username, location).then(() =>
-            this.props.history.push("/todos")
+          LocationDataService.createLocation(username, location).then(() =>
+            this.props.history.push("/locations")
           );
         } else {
-          LocationDataService.updateTodo(username, this.state.id, location).then(() =>
-            this.props.history.push("/todos")
+          LocationDataService.updateLocation(username, this.state.id, location).then(() =>
+            this.props.history.push("/locations")
           );
         }
     
@@ -78,21 +80,26 @@ class ListComponent extends Component{
       //FileUpload
       fileSelectHandler = event => {
         this.setState({
-          selectedFile: event.target.files[0]
+          imageName: event.target.files[0]
         })
       }
-      fileUploadHandler = () => {
-        const fd = new FormData();
-        fd.append('image', this.state.selectedFile, this.state.selectedFile.name)
-        axios.post(`http://localhost:8080/upload`)
-          .then(res =>{
-            console.log(res);
-          })
-      }
+      onFileChangeHandler = (e) => {
+        e.preventDefault();
+        this.setState({
+            selectedFile: e.target.files[0]
+        });
+        const formData = new FormData();
+        formData.append('file', this.state.selectedFile);
+        LocationDataService.upload(formData)
+            .then(res => {
+                    console.log(res.data);
+                    alert("File uploaded successfully.")
+            })
+    };
 
       //renderFunktion
       render() {
-        let {title, description, targetDate } = this.state;
+        let {title, description, targetDate, imageName } = this.state;
         //let targetDate = this.state.targetDate
     
         return (
@@ -100,7 +107,7 @@ class ListComponent extends Component{
             <h1>Location</h1>
             <div className="container">
               <Formik
-                initialValues={{ title ,description, targetDate }}
+                initialValues={{ title ,description, targetDate, imageName }}
                 onSubmit={this.onSubmit}
                 validateOnChange={false}
                 validateOnBlur={false}
@@ -120,10 +127,18 @@ class ListComponent extends Component{
                       className="alert alert-warning"
                     />
                     {/* file upload */}
-                    <div>
-                      <input type="file" onChange={this.fileSelectHandler}/>
-                      <button onClick={this.fileUploadHandler}>Upload</button>
-                    </div>
+                    {/* <div>
+                      <input type="file" onChange={this.onFileChangeHandler}/>
+                      <button type="button" onClick={this.fileUploadHandler}>Upload</button>
+                    </div> */}
+                    <fieldset className="form-group">
+                      <label>Image Upload</label>
+                      <Field
+                        className="form-control"
+                        type="file"
+                        name="imageName"
+                      />
+                    </fieldset> 
                     <fieldset className="form-group">
                       <label>Title</label>
                       <Field

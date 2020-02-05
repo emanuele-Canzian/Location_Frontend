@@ -10,10 +10,10 @@ class LoginComponent extends Component {
             hasLoginFailed: false,
             showSuccessMessage: false
         }
-        
+        this.handlerChange = this.handlerChange.bind(this)
     }
 
-    handlerChange = (event) =>{
+    handlerChange(event){
         console.log(this.state)
         this.setState({
             [event.target.name]
@@ -25,10 +25,10 @@ class LoginComponent extends Component {
         // flo,flo
         
         AuthenticationService
-        .executeBasicAuthenticationService(this.state.username, this.state.password)
+        .executeJwtAuthenticationService(this.state.username, this.state.password)
         .then(
             () => {
-                AuthenticationService.registerSuccessfulLogin(this.state.username,this.state.password);
+                AuthenticationService.registerSuccessfulLoginForJwt(this.state.username,this.state.password);
                 this.props.history.push(`/welcome/${this.state.username}`)
             }
         ).catch(() => {

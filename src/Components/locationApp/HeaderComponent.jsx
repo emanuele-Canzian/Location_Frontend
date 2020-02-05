@@ -13,7 +13,7 @@ class HeaderComponent extends Component{
                 <div className="navbar-brand logo" to="/"></div>
                 <ul className="navbar-nav">
                     {isUserLoggedIn && <li className="nav-link"><Link className="text-white" to="/welcome/in28minutes">Home</Link></li>}
-                    {isUserLoggedIn && <li className="nav-link"><Link className="text-white" to="/todos">Locations</Link></li>}                   
+                    {isUserLoggedIn && <li className="nav-link"><Link className="text-white" to="/locations">Locations</Link></li>}                   
                 </ul>
                 <ul className="navbar-nav navbar-collapse justify-content-end">
                     {!isUserLoggedIn && <li className="nav-link"><Link className="text-white" to="/register">Registrieren</Link></li>} 

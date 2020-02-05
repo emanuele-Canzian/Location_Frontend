@@ -5,7 +5,7 @@ class  WelcomeComponent extends Component
     render(){
         return (
             <div className="container">
-                Welcome {this.props.match.params.email} u can look your locations at <Link to="/todos">Here</Link>
+                Welcome <b>{this.props.match.params.name}</b> u can look your locations at <Link to="/locations">Here</Link>
             </div>
         )
     }

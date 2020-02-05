@@ -9,21 +9,9 @@ class RegisterComponent extends Component{
                     <br/>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">Firstname</span>
+                            <span class="input-group-text" id="basic-addon1">Username</span>
                         </div>
                         <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"/>
-                    </div>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">Lastname</span>
-                        </div>
-                        <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"/>
-                    </div>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">Email</span>
-                        </div>
-                        <input type="email" class="form-control" aria-label="Username" aria-describedby="basic-addon1"/>
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
